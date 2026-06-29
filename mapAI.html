@@ -9,8 +9,9 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 :root{
   --bg:#08081a;--c1:#0d0d22;--c2:#12122e;--bd:#1d1d3a;
-  --p0:#f97316;--p1:#3b82f6;--p2:#a855f7;--p3:#10b981;
+  --ph1:#f97316;--ph2:#3b82f6;--ph3:#a855f7;--ph4:#10b981;
   --pr1:#3b82f6;--pr2:#a855f7;--pr3:#f59e0b;--pr4:#10b981;--pr5:#ec4899;--pr6:#f97316;
+  --neon-c:#00e5ff;--neon-g:#39ff14;
   --txt:#cdd5e8;--muted:#4e5a7a;--white:#fff;
   --fs:14px;--r:10px;
 }
@@ -18,8 +19,23 @@ html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-size:var(--fs);line-height:1.65;min-height:100vh;}
 ::-webkit-scrollbar{width:5px;height:5px;}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:99px;}
 
+/* ─ TOP PROGRESS BAR ─ */
+.top-progress{background:#05050f;border-bottom:1px solid var(--bd);padding:10px 16px;}
+.tp-row{display:flex;gap:24px;max-width:980px;margin:0 auto;align-items:center;flex-wrap:wrap;}
+.tp-block{display:flex;align-items:center;gap:9px;flex:1;min-width:220px;}
+.tp-icon{font-size:17px;flex-shrink:0;}
+.tp-text{flex:1;min-width:0;}
+.tp-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;font-weight:600;}
+.tp-track{height:6px;background:var(--bd);border-radius:99px;overflow:hidden;}
+.tp-fill{height:100%;background:linear-gradient(90deg,#00e5ff,#39ff14);border-radius:99px;width:0%;transition:width .5s ease;box-shadow:0 0 8px rgba(0,229,255,.5);}
+.tp-pct{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;min-width:38px;text-align:right;}
+.tp-days{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:#34d399;white-space:nowrap;}
+.tp-countdown.soon .tp-days{color:#fbbf24;}
+.tp-countdown.urgent .tp-days{color:#f87171;animation:pulse 1.4s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+
 /* ─ HEADER ─ */
-.hdr{background:linear-gradient(160deg,#0a0a1f 0%,#0f0826 100%);border-bottom:1px solid var(--bd);padding:28px 24px 22px;text-align:center;}
+.hdr{background:linear-gradient(160deg,#0a0a1f 0%,#0f0826 100%);border-bottom:1px solid var(--bd);padding:26px 24px 20px;text-align:center;}
 .hdr h1{font-family:'Syne',sans-serif;font-size:clamp(22px,5vw,36px);font-weight:800;color:var(--white);letter-spacing:-.01em;}
 .hdr h1 span{background:linear-gradient(90deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .hdr p{font-size:12.5px;color:var(--muted);margin-top:5px;}
@@ -40,7 +56,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .tbn.act{color:var(--white);border-bottom-color:#60a5fa;}
 
 /* ─ TAB PANES ─ */
-.pane{display:none;padding:28px 20px;max-width:960px;margin:0 auto;}
+.pane{display:none;padding:28px 20px;max-width:980px;margin:0 auto;}
 .pane.act{display:block;}
 
 /* ─ SECTION LABELS ─ */
@@ -55,23 +71,39 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 /* ─ PHASE HEADER ─ */
 .phase-hdr{display:flex;align-items:center;gap:12px;padding:18px;cursor:pointer;user-select:none;}
 .phase-hdr:hover{background:rgba(255,255,255,.018);border-radius:var(--r);}
-.phase-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.12em;padding:4px 10px;border-radius:5px;white-space:nowrap;flex-shrink:0;}
-.pb0{color:var(--p0);background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.2);}
-.pb1{color:var(--p1);background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);}
-.pb2{color:var(--p2);background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);}
-.pb3{color:var(--p3);background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);}
+.phase-hdr>div:nth-child(2){min-width:0;}
+.phase-badge{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.12em;padding:4px 10px;border-radius:5px;white-space:nowrap;flex-shrink:0;}
+.pb1{color:var(--ph1);background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.22);}
+.pb2{color:var(--ph2);background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.22);}
+.pb3{color:var(--ph3);background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.22);}
+.pb4{color:var(--ph4);background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.22);}
 .ph-title{font-weight:700;color:var(--white);font-size:15px;}
 .ph-meta{font-size:11px;color:var(--muted);margin-top:2px;}
-.ph-arrow{margin-left:auto;color:var(--muted);font-size:13px;transition:transform .25s;flex-shrink:0;}
-.phase-wrap{background:var(--c1);border:1px solid var(--bd);border-radius:var(--r);margin-bottom:14px;overflow:hidden;}
+.phase-pct{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--muted);background:rgba(255,255,255,.04);padding:3px 9px;border-radius:99px;margin-left:auto;flex-shrink:0;}
+.phase-pct.pct-done{color:#39ff14;background:rgba(57,255,20,.1);}
+.ph-arrow{color:var(--muted);font-size:13px;transition:transform .25s;flex-shrink:0;margin-left:8px;}
+.phase-wrap{background:var(--c1);border:1px solid var(--bd);border-left:4px solid transparent;border-radius:var(--r);margin-bottom:16px;overflow:hidden;transition:box-shadow .2s;}
+.phw1{border-left-color:var(--ph1);}
+.phw2{border-left-color:var(--ph2);}
+.phw3{border-left-color:var(--ph3);}
+.phw4{border-left-color:var(--ph4);}
 .phase-wrap.ph-open .ph-arrow{transform:rotate(180deg);}
 .phase-body{display:none;padding:6px 20px 22px;}
 .phase-wrap.ph-open .phase-body{display:block;}
 
+/* ─ DEADLINE CHIPS ─ */
+.deadline{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#93a3c7;background:rgba(255,255,255,.04);border:1px solid var(--bd);padding:3px 9px;border-radius:6px;margin-top:6px;}
+.dl-tag{font-weight:700;padding:1px 7px;border-radius:99px;font-size:9.5px;}
+.dl-tag.dl-ok{background:rgba(52,211,153,.15);color:#34d399;}
+.dl-tag.dl-soon{background:rgba(251,191,36,.15);color:#fbbf24;}
+.dl-tag.dl-urgent{background:rgba(248,113,113,.18);color:#f87171;animation:pulse 1.4s infinite;}
+.dl-tag.dl-over{background:rgba(120,120,140,.2);color:#8a8fa8;}
+
 /* ─ COURSE BLOCK ─ */
-.course-blk{background:var(--c2);border:1px solid var(--bd);border-radius:8px;padding:16px;margin-bottom:10px;}
+.course-blk{background:var(--c2);border:1px solid var(--bd);border-radius:9px;padding:17px;margin-bottom:11px;transition:border-color .2s;}
+.course-blk:hover{border-color:rgba(255,255,255,.15);}
 .course-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
-.cnum{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--muted);flex-shrink:0;margin-top:2px;}
+.cnum{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--muted);flex-shrink:0;margin-top:2px;background:rgba(255,255,255,.05);padding:2px 7px;border-radius:5px;}
 .cname{font-weight:700;color:var(--white);font-size:13.5px;}
 .cprov{font-size:11px;color:var(--muted);margin-top:2px;}
 .chrs{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;flex-shrink:0;}
@@ -81,18 +113,20 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 
 /* ─ CHECKPOINTS ─ */
 .ck-section{margin-top:10px;}
-.ck-label{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-.ck-group{margin-bottom:10px;}
-.ck-group-title{font-size:11px;font-weight:600;color:var(--txt);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
-.ck-group-title::before{content:'';display:inline-block;width:3px;height:3px;background:var(--muted);border-radius:50%;}
-.ck-item{display:flex;align-items:flex-start;gap:9px;padding:5px 0;cursor:pointer;}
-.ck-item input[type=checkbox]{width:14px;height:14px;accent-color:#60a5fa;cursor:pointer;flex-shrink:0;margin-top:2px;}
-.ck-item label{font-size:12px;color:var(--txt);cursor:pointer;line-height:1.5;}
+.ck-label{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:700;}
+.ck-group{margin-bottom:12px;}
+.ck-group-title{font-size:11.5px;font-weight:700;color:var(--txt);margin-bottom:7px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.ck-item{display:flex;align-items:flex-start;gap:12px;padding:7px 0;cursor:pointer;}
+.ck-item input[type=checkbox]{width:26px;height:26px;flex-shrink:0;margin-top:0;cursor:pointer;appearance:none;-webkit-appearance:none;border:2.5px solid var(--neon-c);border-radius:7px;background:rgba(0,229,255,.06);box-shadow:0 0 9px rgba(0,229,255,.4),inset 0 0 5px rgba(0,229,255,.12);transition:all .18s ease;position:relative;}
+.ck-item input[type=checkbox]:hover{box-shadow:0 0 16px rgba(0,229,255,.7),inset 0 0 6px rgba(0,229,255,.25);}
+.ck-item input[type=checkbox]:checked{background:var(--neon-g);border-color:var(--neon-g);box-shadow:0 0 16px rgba(57,255,20,.85),0 0 30px rgba(57,255,20,.35);}
+.ck-item input[type=checkbox]:checked::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#03030a;font-size:16px;font-weight:900;}
+.ck-item label{font-size:12.5px;color:var(--txt);cursor:pointer;line-height:1.55;padding-top:3px;}
 .ck-item.done label{text-decoration:line-through;color:var(--muted);}
-.ck-milestone{background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-radius:6px;padding:8px 12px;margin-top:6px;font-size:12px;font-weight:600;color:#60a5fa;}
+.ck-milestone{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.22);border-radius:7px;padding:10px 13px;margin-top:8px;font-size:12px;font-weight:600;color:#60a5fa;line-height:1.5;}
 .ck-milestone::before{content:'🎯 ';}
-.progress-bar{height:4px;background:var(--bd);border-radius:99px;margin-top:10px;overflow:hidden;}
-.progress-fill{height:100%;background:linear-gradient(90deg,#3b82f6,#a78bfa);border-radius:99px;transition:width .4s ease;}
+.progress-bar{height:5px;background:var(--bd);border-radius:99px;margin-top:11px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,#00e5ff,#39ff14);border-radius:99px;transition:width .4s ease;box-shadow:0 0 6px rgba(0,229,255,.4);}
 
 /* ─ PRIORITY BADGES ─ */
 .pbadges{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}
@@ -108,10 +142,10 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-top:14px;}
 .proj-card{background:var(--c1);border:1px solid var(--bd);border-radius:var(--r);padding:18px;position:relative;overflow:hidden;}
 .proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.pc0::before{background:var(--p0);}
-.pc1::before{background:var(--p1);}
-.pc2::before{background:var(--p2);}
-.pc3::before{background:var(--p3);}
+.pc1::before{background:var(--ph1);}
+.pc2::before{background:var(--ph2);}
+.pc3::before{background:var(--ph3);}
+.pc4::before{background:var(--ph4);}
 .pc-phase{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
 .pc-name{font-weight:700;color:var(--white);font-size:14.5px;margin-bottom:6px;}
 .pc-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:12px;}
@@ -125,7 +159,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 .worth-abs{background:rgba(245,158,11,.1);color:#fbbf24;border:1px solid rgba(245,158,11,.25);}
 
 /* ─ RESEARCH CARDS ─ */
-.research-card{background:var(--c1);border:1px solid var(--bd);border-radius:var(--r);padding:18px;margin-bottom:12px;border-left:3px solid var(--p2);}
+.research-card{background:var(--c1);border:1px solid var(--bd);border-radius:var(--r);padding:18px;margin-bottom:12px;border-left:3px solid var(--ph3);}
 .rc-tag{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#c084fc;margin-bottom:6px;}
 .rc-title{font-weight:700;color:var(--white);font-size:14px;margin-bottom:6px;}
 .rc-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:10px;}
@@ -207,7 +241,7 @@ ul.plain li{padding:4px 0;font-size:12.5px;display:flex;gap:7px;}
 ul.plain li::before{content:'·';color:var(--muted);}
 .startup-path{background:var(--c2);border:1px solid rgba(249,115,22,.25);border-radius:var(--r);padding:18px;margin-bottom:12px;}
 .sp-stage{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;}
-.sp-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--p0);background:rgba(249,115,22,.1);padding:3px 8px;border-radius:4px;flex-shrink:0;margin-top:1px;}
+.sp-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--ph1);background:rgba(249,115,22,.1);padding:3px 8px;border-radius:4px;flex-shrink:0;margin-top:1px;}
 .sp-txt{font-size:12.5px;color:var(--txt);line-height:1.55;}
 .sp-txt strong{color:var(--white);}
 .intern-tip{background:var(--c2);border:1px solid var(--bd);border-radius:8px;padding:16px;margin-bottom:10px;}
@@ -218,8 +252,15 @@ ul.plain li::before{content:'·';color:var(--muted);}
 .it-list li::before{content:'→';color:var(--muted);flex-shrink:0;}
 
 @media(max-width:640px){
+  .tp-row{gap:10px;}
+  .tp-block{min-width:100%;}
+  .phase-hdr{gap:10px;align-items:flex-start;}
+  .phase-hdr>div:nth-child(2){flex:1 1 160px;}
   .phase-badge{font-size:9px;}
   .ph-title{font-size:13.5px;}
+  .phase-pct{margin-left:0;}
+  .ph-arrow{margin-left:auto;}
+  .course-top{flex-wrap:wrap;}
   .proj-grid{grid-template-columns:1fr;}
   .stat-row{gap:8px;}
 }
@@ -227,10 +268,32 @@ ul.plain li::before{content:'·';color:var(--muted);}
 </head>
 <body>
 
+<!-- TOP PROGRESS -->
+<div class="top-progress">
+  <div class="tp-row">
+    <div class="tp-block">
+      <div class="tp-icon">📈</div>
+      <div class="tp-text">
+        <div class="tp-label">Overall roadmap progress</div>
+        <div class="tp-track"><div class="tp-fill" id="overallFill"></div></div>
+      </div>
+      <div class="tp-pct" id="overallPct">0%</div>
+    </div>
+    <div class="tp-block tp-countdown" id="irisCountdown">
+      <div class="tp-icon">🏆</div>
+      <div class="tp-text">
+        <div class="tp-label">IRIS readiness · Oct 15, 2026</div>
+        <div class="tp-track"><div class="tp-fill" id="irisFill"></div></div>
+      </div>
+      <div class="tp-days" id="irisDays">--d</div>
+    </div>
+  </div>
+</div>
+
 <!-- HEADER -->
 <div class="hdr">
   <h1>Your <span>AI Mastery</span> Roadmap 2026</h1>
-  <p>36-week optimized plan · 10–14 hrs/week · 100% free · Built around your 6 goals</p>
+  <p>36-week optimized plan · starts June 29, 2026 · 10–14 hrs/week · 100% free · Built around your 6 goals</p>
   <div class="hdr-tags">
     <span class="htag ht1">🎯 P1: Projects &amp; Scale</span>
     <span class="htag ht2">🔬 P2: Research Fields</span>
@@ -258,10 +321,10 @@ ul.plain li::before{content:'·';color:var(--muted);}
   <div class="start-today">
     <div class="st-title">⚡ Start Today — Right Now</div>
     <ul class="st-steps">
-      <li><span class="st-n">NOW</span> Go to <a href="https://learn.deeplearning.ai/courses/chatgpt-prompt-eng-for-developers" target="_blank">deeplearning.ai/short-courses</a> → Enroll in "Prompt Engineering for Developers" (free, 1.5 hrs)</li>
-      <li><span class="st-n">Day 2</span> Get a free OpenAI API key at platform.openai.com → write your first Python API call</li>
-      <li><span class="st-n">Day 3</span> Open <a href="https://lovable.dev" target="_blank">lovable.dev</a> → paste a description of your app → get a running web app in 10 minutes</li>
-      <li><span class="st-n">Week 1</span> You'll have your first deployed AI app. That's your first portfolio project done.</li>
+      <li><span class="st-n">Jun 29</span> Go to <a href="https://learn.deeplearning.ai/courses/chatgpt-prompt-eng-for-developers" target="_blank">deeplearning.ai/short-courses</a> → enroll in "Prompt Engineering for Developers" (free, 1.5 hrs)</li>
+      <li><span class="st-n">Jul 01</span> Get an API key at platform.openai.com → write your first Python API call</li>
+      <li><span class="st-n">Jul 03</span> Open <a href="https://lovable.dev" target="_blank">lovable.dev</a> → paste a description of your app → get a running web app</li>
+      <li><span class="st-n">Jul 12</span> Ship the first deployed AI app and one public Kaggle notebook.</li>
     </ul>
   </div>
 
@@ -279,17 +342,17 @@ ul.plain li::before{content:'·';color:var(--muted);}
     <div class="pmap-card">
       <div class="pmap-icon">🎯</div>
       <div class="pmap-title">P1: Projects &amp; Scale</div>
-      <div class="pmap-phases">All 4 phases build projects. <strong>Phase 0</strong> ships your first in Week 1. Each phase hands you a bigger, more impressive one.</div>
+      <div class="pmap-phases">All 4 phases build projects. <strong>Phase 1</strong> ships your first in Week 2. Each phase hands you a bigger, more impressive one.</div>
     </div>
     <div class="pmap-card">
       <div class="pmap-icon">🔬</div>
       <div class="pmap-title">P2: Research Fields</div>
-      <div class="pmap-phases"><strong>Phase 2</strong> (fast.ai) + <strong>Phase 3</strong> (Hugging Face) give you the tools to train original models — the core of ISEF research.</div>
+      <div class="pmap-phases"><strong>Phase 3</strong> (fast.ai) + <strong>Phase 4</strong> (Hugging Face) give you the tools to train original models — the core of ISEF/IRIS research.</div>
     </div>
     <div class="pmap-card">
       <div class="pmap-icon">⚡</div>
       <div class="pmap-title">P3: Hackathon Wins</div>
-      <div class="pmap-phases"><strong>Phase 0</strong> skills alone can win hackathons. After <strong>Phase 3</strong> (agents + RAG) you're a serious threat at any competition.</div>
+      <div class="pmap-phases"><strong>Phase 1</strong> skills are enough for beginner hackathons. After <strong>Phase 4</strong> (agents + RAG) you're a serious threat at any competition.</div>
     </div>
     <div class="pmap-card">
       <div class="pmap-icon">💼</div>
@@ -299,12 +362,12 @@ ul.plain li::before{content:'·';color:var(--muted);}
     <div class="pmap-card">
       <div class="pmap-icon">🏆</div>
       <div class="pmap-title">P5: ISEF / Science Fair</div>
-      <div class="pmap-phases">Start your research topic at <strong>Week 8</strong>. Use Phase 2 skills (custom model training). Submit to regional fair by January 2027.</div>
+      <div class="pmap-phases">Start your research topic by <strong>August 15, 2026</strong>. Use Phase 3 skills for custom model training. Keep the IRIS working target as <strong>October 15, 2026</strong>.</div>
     </div>
     <div class="pmap-card">
       <div class="pmap-icon">🚀</div>
       <div class="pmap-title">P6: Startup / SaaS</div>
-      <div class="pmap-phases">One of your Phase 2–3 projects will have startup potential. The <strong>Launch tab</strong> shows exactly how to scale it into a product.</div>
+      <div class="pmap-phases">One of your Phase 3–4 projects will have startup potential. The <strong>Launch tab</strong> shows exactly how to scale it into a product.</div>
     </div>
   </div>
 
@@ -313,19 +376,19 @@ ul.plain li::before{content:'·';color:var(--muted);}
   <div class="timeline">
     <div class="tl-item">
       <div class="tl-left"><div class="tl-dot" style="background:#f97316"></div><div class="tl-line"></div></div>
-      <div class="tl-content"><div class="tl-wk">WEEKS 1–3 · ~15 HRS</div><div class="tl-name">⚡ Phase 0: Launch Fast</div><div class="tl-sub">Prompt engineering → First API call → First deployed AI app → Enter first hackathon</div><div class="pbadges"><span class="pbdg pbd1">Projects</span><span class="pbdg pbd3">Hackathon</span><span class="pbdg pbd6">Startup</span></div></div>
+      <div class="tl-content"><div class="tl-wk">WEEKS 1–3 · JUN 29–JUL 19 · ~15 HRS</div><div class="tl-name">⚡ Phase 1: Launch Fast</div><div class="tl-sub">Prompt engineering → First API call → First deployed AI app → Enter first hackathon</div><div class="pbadges"><span class="pbdg pbd1">Projects</span><span class="pbdg pbd3">Hackathon</span><span class="pbdg pbd6">Startup</span></div></div>
     </div>
     <div class="tl-item">
       <div class="tl-left"><div class="tl-dot" style="background:#3b82f6"></div><div class="tl-line"></div></div>
-      <div class="tl-content"><div class="tl-wk">WEEKS 5–18 · ~99 HRS</div><div class="tl-name">📊 Phase 1: ML Foundations</div><div class="tl-sub">Kaggle competitions begin · Andrew Ng ML Specialization (corrected: ~90 hrs) · Research topic chosen at Week 8</div><div class="pbadges"><span class="pbdg pbd2">Research</span><span class="pbdg pbd4">Internship</span><span class="pbdg pbd5">ISEF</span></div></div>
+      <div class="tl-content"><div class="tl-wk">WEEKS 4–17 · JUL 20–OCT 25 · ~99 HRS</div><div class="tl-name">📊 Phase 2: ML Foundations</div><div class="tl-sub">Kaggle competitions begin · Andrew Ng ML Specialization (corrected: ~90 hrs) · Research topic chosen by August 15</div><div class="pbadges"><span class="pbdg pbd2">Research</span><span class="pbdg pbd4">Internship</span><span class="pbdg pbd5">ISEF/IRIS</span></div></div>
     </div>
     <div class="tl-item">
       <div class="tl-left"><div class="tl-dot" style="background:#a855f7"></div><div class="tl-line"></div></div>
-      <div class="tl-content"><div class="tl-wk">WEEKS 19–26 · ~44 HRS</div><div class="tl-name">🧠 Phase 2: Deep Learning</div><div class="tl-sub">fast.ai: train custom models · ISEF research data collection begins · Science fair registration</div><div class="pbadges"><span class="pbdg pbd2">Research</span><span class="pbdg pbd5">ISEF</span><span class="pbdg pbd4">Internship</span></div></div>
+      <div class="tl-content"><div class="tl-wk">WEEKS 18–25 · OCT 26–DEC 20 · ~44 HRS</div><div class="tl-name">🧠 Phase 3: Deep Learning</div><div class="tl-sub">fast.ai: train custom models · IRIS prototype refinement · Science fair registration</div><div class="pbadges"><span class="pbdg pbd2">Research</span><span class="pbdg pbd5">ISEF/IRIS</span><span class="pbdg pbd4">Internship</span></div></div>
     </div>
     <div class="tl-item">
       <div class="tl-left"><div class="tl-dot" style="background:#10b981"></div><div class="tl-line"></div></div>
-      <div class="tl-content"><div class="tl-wk">WEEKS 27–36 · ~26 HRS</div><div class="tl-name">🤖 Phase 3: LLMs &amp; Agents</div><div class="tl-sub">Hugging Face fine-tuning · RAG pipelines · Multi-agent systems · SaaS product shipped</div><div class="pbadges"><span class="pbdg pbd1">Projects</span><span class="pbdg pbd3">Hackathon</span><span class="pbdg pbd6">Startup</span></div></div>
+      <div class="tl-content"><div class="tl-wk">WEEKS 26–36 · DEC 21–MAR 14 · ~26 HRS</div><div class="tl-name">🤖 Phase 4: LLMs &amp; Agents</div><div class="tl-sub">Hugging Face fine-tuning · RAG pipelines · Multi-agent systems · SaaS product shipped</div><div class="pbadges"><span class="pbdg pbd1">Projects</span><span class="pbdg pbd3">Hackathon</span><span class="pbdg pbd6">Startup</span></div></div>
     </div>
     <div class="tl-item">
       <div class="tl-left"><div class="tl-dot" style="background:#ec4899"></div></div>
@@ -344,21 +407,22 @@ ul.plain li::before{content:'·';color:var(--muted);}
   <div class="slbl">How to read this</div>
   <p class="sdesc">Each course has micro-checkpoints you can actually tick off as you complete them. Your progress is saved in this file. ✅ = completed. 🎯 = milestone (build something).</p>
 
-  <!-- PHASE 0 -->
-  <div class="phase-wrap ph-open">
+  <!-- PHASE 1 -->
+  <div class="phase-wrap phw1 ph-open">
     <div class="phase-hdr" onclick="togglePhase(this)">
-      <div class="phase-badge pb0">PHASE 0</div>
+      <div class="phase-badge pb1">PHASE 1</div>
       <div>
         <div class="ph-title">⚡ Launch Fast</div>
         <div class="ph-meta">Weeks 1–3 · ~15 hrs · Goal: First deployed AI app + first hackathon entry</div>
       </div>
+      <div class="phase-pct">0%</div>
       <div class="ph-arrow">▼</div>
     </div>
     <div class="phase-body">
 
       <div class="course-blk">
         <div class="course-top">
-          <div class="cnum">C01</div>
+          <div class="cnum">C1</div>
           <div>
             <div class="cname">AI For Everyone <span class="ftag">FREE</span></div>
             <div class="cprov">Andrew Ng · Coursera (Audit free)</div>
@@ -370,19 +434,19 @@ ul.plain li::before{content:'·';color:var(--muted);}
           <div class="ck-label">Checkpoints</div>
           <div class="ck-group">
             <div class="ck-group-title">Week 1 of course</div>
-            <div class="ck-item" data-id="c01-1"><input type="checkbox" id="c01-1"><label for="c01-1">Watch "What is AI?" — understand ML vs DL vs Data Science</label></div>
-            <div class="ck-item" data-id="c01-2"><input type="checkbox" id="c01-2"><label for="c01-2">Complete "AI Terminology" and "What Makes an AI Company"</label></div>
-            <div class="ck-item" data-id="c01-3"><input type="checkbox" id="c01-3"><label for="c01-3">Week 2: Building AI Projects &amp; What AI Can/Can't Do</label></div>
-            <div class="ck-item" data-id="c01-4"><input type="checkbox" id="c01-4"><label for="c01-4">Week 3–4: AI and Society, AI Strategy</label></div>
+            <div class="ck-item" data-id="p1-ai-1"><input type="checkbox" id="p1-ai-1"><label for="p1-ai-1">Watch "What is AI?" — understand ML vs DL vs Data Science</label></div>
+            <div class="ck-item" data-id="p1-ai-2"><input type="checkbox" id="p1-ai-2"><label for="p1-ai-2">Complete "AI Terminology" and "What Makes an AI Company"</label></div>
+            <div class="ck-item" data-id="p1-ai-3"><input type="checkbox" id="p1-ai-3"><label for="p1-ai-3">Week 2: Building AI Projects &amp; What AI Can/Can't Do</label></div>
+            <div class="ck-item" data-id="p1-ai-4"><input type="checkbox" id="p1-ai-4"><label for="p1-ai-4">Week 3–4: AI and Society, AI Strategy</label></div>
             <div class="ck-milestone">You can now explain what AI is to anyone, and know what problems AI can actually solve.</div>
           </div>
         </div>
-        <div class="progress-bar"><div class="progress-fill" data-items="c01-1,c01-2,c01-3,c01-4"></div></div>
+        <div class="progress-bar"><div class="progress-fill" data-items="p1-ai-1,p1-ai-2,p1-ai-3,p1-ai-4"></div></div>
       </div>
 
       <div class="course-blk">
         <div class="course-top">
-          <div class="cnum">C02</div>
+          <div class="cnum">C2</div>
           <div>
             <div class="cname">ChatGPT Prompt Engineering for Developers <span class="ftag">FREE</span></div>
             <div class="cprov">DeepLearning.AI + OpenAI · deeplearning.ai/short-courses</div>
@@ -403,7 +467,7 @@ ul.plain li::before{content:'·';color:var(--muted);}
 
       <div class="course-blk">
         <div class="course-top">
-          <div class="cnum">C03</div>
+          <div class="cnum">C3</div>
           <div>
             <div class="cname">Kaggle: Intro to ML + Pandas <span class="ftag">FREE</span></div>
             <div class="cprov">Kaggle Learn · kaggle.com/learn</div>
@@ -420,25 +484,26 @@ ul.plain li::before{content:'·';color:var(--muted);}
         <div class="progress-bar"><div class="progress-fill" data-items="c03-1,c03-2,c03-3"></div></div>
       </div>
 
-      <div class="callout callout-success"><strong>Phase 0 Complete:</strong> You have a deployed AI app, your first Kaggle profile, and you can call AI APIs programmatically. Ready to enter your first hackathon. <strong>Next → Andrew Ng ML Specialization (finish it fully before fast.ai).</strong></div>
+      <div class="callout callout-success"><strong>Phase 1 Complete:</strong> You have a deployed AI app, your first Kaggle profile, and you can call AI APIs programmatically. Ready to enter your first hackathon. <strong>Next → Andrew Ng ML Specialization (finish it fully before fast.ai).</strong></div>
     </div>
   </div>
 
-  <!-- PHASE 1 -->
-  <div class="phase-wrap">
+  <!-- PHASE 2 -->
+  <div class="phase-wrap phw2">
     <div class="phase-hdr" onclick="togglePhase(this)">
-      <div class="phase-badge pb1">PHASE 1</div>
+      <div class="phase-badge pb2">PHASE 2</div>
       <div>
         <div class="ph-title">📊 ML Foundations</div>
-        <div class="ph-meta">Weeks 5–18 · ~99 hrs · Andrew Ng ML Spec (corrected: ~90 hrs) + Kaggle Intermediate · Choose ISEF topic at Week 8</div>
+        <div class="ph-meta">Weeks 4–17 · ~99 hrs · Andrew Ng ML Spec (corrected: ~90 hrs) + Kaggle Intermediate · Choose ISEF/IRIS topic by August 15</div>
       </div>
+      <div class="phase-pct">0%</div>
       <div class="ph-arrow">▼</div>
     </div>
     <div class="phase-body">
 
       <div class="course-blk">
         <div class="course-top">
-          <div class="cnum">C05</div>
+          <div class="cnum">C4</div>
           <div>
             <div class="cname">Kaggle: Intermediate ML + Data Visualization <span class="ftag">FREE</span></div>
             <div class="cprov">Kaggle Learn</div>
@@ -456,7 +521,7 @@ ul.plain li::before{content:'·';color:var(--muted);}
 
       <div class="course-blk">
         <div class="course-top">
-          <div class="cnum">C06</div>
+          <div class="cnum">C5</div>
           <div>
             <div class="cname">Machine Learning Specialization <span class="ftag">FREE</span></div>
             <div class="cprov">Andrew Ng · Coursera (Audit free) · 3-course series · ~90 hrs total</div>
@@ -465,7 +530,7 @@ ul.plain li::before{content:'·';color:var(--muted);}
           <div class="chrs">~90 hrs</div>
         </div>
         <div class="ck-section">
-          <div class="ck-label">Course 1 — Supervised Machine Learning (~33 hrs · Weeks 5–9)</div>
+          <div class="ck-label">Course 1 — Supervised Machine Learning (~33 hrs · Weeks 4–8)</div>
           <div class="ck-group">
             <div class="ck-group-title">Week 1 of course</div>
             <div class="ck-item" data-id="c06-1"><input type="checkbox" id="c06-1"><label for="c06-1">Linear regression, cost function, gradient descent (Labs 1–3)</label></div>
@@ -480,7 +545,7 @@ ul.plain li::before{content:'·';color:var(--muted);}
           </div>
           <div class="ck-milestone">Course 1 complete → Build: Student Grade Predictor (logistic regression on real dataset)</div>
 
-          <div class="ck-label" style="margin-top:16px;">Course 2 — Advanced Learning Algorithms (~34 hrs · Weeks 10–14)</div>
+          <div class="ck-label" style="margin-top:16px;">Course 2 — Advanced Learning Algorithms (~34 hrs · Weeks 9–13)</div>
           <div class="ck-group">
             <div class="ck-group-title">Week 1</div>
             <div class="ck-item" data-id="c06-4"><input type="checkbox" id="c06-4"><label for="c06-4">Neural networks, forward propagation, TensorFlow basics (Labs 1–4)</label></div>
@@ -499,7 +564,7 @@ ul.plain li::before{content:'·';color:var(--muted);}
           </div>
           <div class="ck-milestone">Course 2 complete → Build: Disease Classifier (diabetes/heart disease Kaggle dataset)</div>
 
-          <div class="ck-label" style="margin-top:16px;">Course 3 — Unsupervised, Recommenders, Reinforcement (~23 hrs · Weeks 15–18)</div>
+          <div class="ck-label" style="margin-top:16px;">Course 3 — Unsupervised, Recommenders, Reinforcement (~23 hrs · Weeks 14–17)</div>
           <div class="ck-group">
             <div class="ck-group-title">Week 1</div>
             <div class="ck-item" data-id="c06-8"><input type="checkbox" id="c06-8"><label for="c06-8">K-means clustering, anomaly detection (Labs 1–3)</label></div>
@@ -517,25 +582,26 @@ ul.plain li::before{content:'·';color:var(--muted);}
         <div class="progress-bar"><div class="progress-fill" data-items="c06-1,c06-2,c06-3,c06-4,c06-5,c06-6,c06-7,c06-8,c06-9,c06-10"></div></div>
       </div>
 
-      <div class="callout callout-tip"><strong>👉 Week 8 Action:</strong> By now you understand enough ML to pick your ISEF research topic. Go to the Research tab and read the 6 field ideas. Pick one and start a Google Doc with a rough research outline. You do NOT need Phase 2 skills to start the literature review.</div>
+      <div class="callout callout-tip"><strong>👉 August 15 Action:</strong> By now you understand enough ML to pick your ISEF/IRIS research topic. Go to the Research tab and read the 6 field ideas. Pick one and start a Google Doc with a rough research outline. You do NOT need Phase 3 skills to start the literature review.</div>
     </div>
   </div>
 
-  <!-- PHASE 2 -->
-  <div class="phase-wrap">
+  <!-- PHASE 3 -->
+  <div class="phase-wrap phw3">
     <div class="phase-hdr" onclick="togglePhase(this)">
-      <div class="phase-badge pb2">PHASE 2</div>
+      <div class="phase-badge pb3">PHASE 3</div>
       <div>
         <div class="ph-title">🧠 Deep Learning — Train Custom Models</div>
-        <div class="ph-meta">Weeks 19–26 · ~44 hrs · fast.ai is the single most important course for ISEF + research</div>
+        <div class="ph-meta">Weeks 18–25 · ~44 hrs · fast.ai is the single most important course for ISEF/IRIS + research</div>
       </div>
+      <div class="phase-pct">0%</div>
       <div class="ph-arrow">▼</div>
     </div>
     <div class="phase-body">
 
       <div class="course-blk">
         <div class="course-top">
-          <div class="cnum">C07</div>
+          <div class="cnum">C6</div>
           <div>
             <div class="cname">Practical Deep Learning for Coders <span class="ftag">FREE</span></div>
             <div class="cprov">fast.ai · fast.ai/courses</div>
@@ -545,30 +611,30 @@ ul.plain li::before{content:'·';color:var(--muted);}
         </div>
         <div class="ck-section">
           <div class="ck-group">
-            <div class="ck-group-title">Lesson 1–2 (Week 19–20)</div>
+            <div class="ck-group-title">Lesson 1–2 (Weeks 18–19)</div>
             <div class="ck-item" data-id="c07-1"><input type="checkbox" id="c07-1"><label for="c07-1">Lesson 1: Train image classifier (bird vs. not-bird) — deploy on Hugging Face Spaces</label></div>
             <div class="ck-item" data-id="c07-2"><input type="checkbox" id="c07-2"><label for="c07-2">Lesson 2: Production considerations, multi-label classification, Gradio demo</label></div>
           </div>
           <div class="ck-group">
-            <div class="ck-group-title">Lesson 3–5 (Week 21–22)</div>
+            <div class="ck-group-title">Lesson 3–5 (Weeks 20–21)</div>
             <div class="ck-item" data-id="c07-3"><input type="checkbox" id="c07-3"><label for="c07-3">Lesson 3: Neural net foundations — understand what's actually happening inside</label></div>
             <div class="ck-item" data-id="c07-4"><input type="checkbox" id="c07-4"><label for="c07-4">Lesson 4: NLP with transformers — fine-tune sentiment model</label></div>
             <div class="ck-item" data-id="c07-5"><input type="checkbox" id="c07-5"><label for="c07-5">Lesson 5: Tabular data, feature importance, random forests</label></div>
           </div>
           <div class="ck-group">
-            <div class="ck-group-title">Lesson 6–8 (Week 23–24)</div>
+            <div class="ck-group-title">Lesson 6–8 (Weeks 22–23)</div>
             <div class="ck-item" data-id="c07-6"><input type="checkbox" id="c07-6"><label for="c07-6">Lesson 6: Random forests from scratch — understand the algorithm deeply</label></div>
             <div class="ck-item" data-id="c07-7"><input type="checkbox" id="c07-7"><label for="c07-7">Lesson 7: Collaborative filtering deep dive</label></div>
             <div class="ck-item" data-id="c07-8"><input type="checkbox" id="c07-8"><label for="c07-8">Lessons 8+: PyTorch internals, custom training loops, gradient calculations</label></div>
           </div>
-          <div class="ck-milestone">ISEF Project: Plant Disease Detector trained on PlantVillage + your own collected local images. Deployed on Hugging Face Spaces.</div>
+          <div class="ck-milestone">ISEF/IRIS Project: Plant Disease Detector trained on PlantVillage + your own collected local images. Deployed on Hugging Face Spaces.</div>
         </div>
         <div class="progress-bar"><div class="progress-fill" data-items="c07-1,c07-2,c07-3,c07-4,c07-5,c07-6,c07-7,c07-8"></div></div>
       </div>
 
       <div class="course-blk">
         <div class="course-top">
-          <div class="cnum">C08</div>
+          <div class="cnum">C7</div>
           <div>
             <div class="cname">Kaggle: Deep Learning (Keras/TF) <span class="ftag">FREE</span></div>
             <div class="cprov">Kaggle Learn</div>
@@ -583,25 +649,26 @@ ul.plain li::before{content:'·';color:var(--muted);}
         <div class="progress-bar"><div class="progress-fill" data-items="c08-1,c08-2,c08-3"></div></div>
       </div>
 
-      <div class="callout callout-success"><strong>Phase 2 Complete:</strong> You can train custom vision + NLP models. Your ISEF project is in progress. You have enough skills for a research internship application.</div>
+      <div class="callout callout-success"><strong>Phase 3 Complete:</strong> You can train custom vision + NLP models. Your ISEF/IRIS project is in progress. You have enough skills for a research internship application.</div>
     </div>
   </div>
 
-  <!-- PHASE 3 -->
-  <div class="phase-wrap">
+  <!-- PHASE 4 -->
+  <div class="phase-wrap phw4">
     <div class="phase-hdr" onclick="togglePhase(this)">
-      <div class="phase-badge pb3">PHASE 3</div>
+      <div class="phase-badge pb4">PHASE 4</div>
       <div>
         <div class="ph-title">🤖 LLMs, RAG &amp; Agents — The 2026 Frontier</div>
-        <div class="ph-meta">Weeks 27–36 · ~26 hrs · SaaS product ships here · Hackathon power unlocked</div>
+        <div class="ph-meta">Weeks 26–36 · ~26 hrs · SaaS product ships here · Hackathon power unlocked</div>
       </div>
+      <div class="phase-pct">0%</div>
       <div class="ph-arrow">▼</div>
     </div>
     <div class="phase-body">
 
       <div class="course-blk">
         <div class="course-top">
-          <div class="cnum">C09</div>
+          <div class="cnum">C8</div>
           <div>
             <div class="cname">Generative AI for Beginners <span class="ftag">FREE</span></div>
             <div class="cprov">Microsoft · GitHub: microsoft/generative-ai-for-beginners</div>
@@ -619,7 +686,7 @@ ul.plain li::before{content:'·';color:var(--muted);}
 
       <div class="course-blk">
         <div class="course-top">
-          <div class="cnum">C10</div>
+          <div class="cnum">C9</div>
           <div>
             <div class="cname">Hugging Face NLP Course <span class="ftag">FREE</span></div>
             <div class="cprov">Hugging Face · huggingface.co/learn/nlp-course</div>
@@ -647,7 +714,7 @@ ul.plain li::before{content:'·';color:var(--muted);}
 
       <div class="course-blk">
         <div class="course-top">
-          <div class="cnum">C11</div>
+          <div class="cnum">C10</div>
           <div>
             <div class="cname">LangChain RAG + LangGraph Agents <span class="ftag">FREE</span></div>
             <div class="cprov">DeepLearning.AI short courses (both free)</div>
@@ -665,7 +732,7 @@ ul.plain li::before{content:'·';color:var(--muted);}
         <div class="progress-bar"><div class="progress-fill" data-items="c11-1,c11-2,c11-3,c11-4"></div></div>
       </div>
 
-      <div class="callout callout-success"><strong>Phase 3 Complete:</strong> You can build autonomous AI agents, fine-tune open-source LLMs, and ship full-stack AI products. You're now in the top 1% of high schoolers globally for AI skills.</div>
+      <div class="callout callout-success"><strong>Phase 4 Complete:</strong> You can build autonomous AI agents, fine-tune open-source LLMs, and ship full-stack AI products. You're now in the top 1% of high schoolers globally for AI skills.</div>
     </div>
   </div>
 
@@ -679,8 +746,8 @@ ul.plain li::before{content:'·';color:var(--muted);}
 
   <div class="proj-grid">
 
-    <div class="proj-card pc0">
-      <div class="pc-phase">Phase 0 · Week 2</div>
+    <div class="proj-card pc1">
+      <div class="pc-phase">Phase 1 · Week 2</div>
       <div class="pc-name">AI Sentiment Analyzer</div>
       <div class="pc-desc">OpenAI API + Python backend. Users paste text → get positive/negative/neutral classification with explanation. Deployed as web app via Lovable.</div>
       <div class="pc-section">
@@ -704,8 +771,8 @@ ul.plain li::before{content:'·';color:var(--muted);}
       <div><span class="worth worth-yes">✅ Worth It — Ships in one afternoon</span></div>
     </div>
 
-    <div class="proj-card pc1">
-      <div class="pc-phase">Phase 1 · Week 10</div>
+    <div class="proj-card pc2">
+      <div class="pc-phase">Phase 2 · Week 10</div>
       <div class="pc-name">Disease Risk Classifier</div>
       <div class="pc-desc">Train logistic regression + random forest on UCI Heart Disease or Pima Diabetes dataset. Compare model accuracies. Write a short analysis document.</div>
       <div class="pc-section">
@@ -729,10 +796,10 @@ ul.plain li::before{content:'·';color:var(--muted);}
       <div><span class="worth worth-yes">✅ Worth It — Builds toward ISEF</span></div>
     </div>
 
-    <div class="proj-card pc2">
-      <div class="pc-phase">Phase 2 · Week 20 → ISEF SEED</div>
+    <div class="proj-card pc3">
+      <div class="pc-phase">Phase 3 · Week 20 → ISEF/IRIS SEED</div>
       <div class="pc-name">🌿 Plant Disease Detector</div>
-      <div class="pc-desc">Fine-tune ResNet-34 on PlantVillage dataset. Collect 200–500 original photos of local Assam crops (tea leaves, rice). This original data = ISEF eligibility. Deploy free on Hugging Face Spaces.</div>
+      <div class="pc-desc">Fine-tune ResNet-34 on PlantVillage dataset. Collect 200–500 original photos of local Assam crops (tea leaves, rice). This original data = ISEF/IRIS eligibility. Deploy free on Hugging Face Spaces.</div>
       <div class="pc-section">
         <div class="pc-slbl">How to Build (15 hours)</div>
         <ul class="pc-list">
@@ -747,18 +814,18 @@ ul.plain li::before{content:'·';color:var(--muted);}
       <div class="pc-section">
         <div class="pc-slbl">What You Gain</div>
         <ul class="pc-list">
-          <li>ISEF project with genuine original data contribution</li>
+          <li>ISEF/IRIS project with genuine original data contribution</li>
           <li>Real social impact story (Assam agriculture)</li>
           <li>Computer vision deployment on your portfolio</li>
           <li>Potential startup: SaaS for farmers (take photos → get diagnosis)</li>
         </ul>
       </div>
-      <div class="pbadges"><span class="pbdg pbd2">Research</span><span class="pbdg pbd5">ISEF</span><span class="pbdg pbd6">Startup</span><span class="pbdg pbd3">Hackathon</span></div>
-      <div><span class="worth worth-abs">🔥 MUST BUILD — ISEF + Startup potential</span></div>
+      <div class="pbadges"><span class="pbdg pbd2">Research</span><span class="pbdg pbd5">ISEF/IRIS</span><span class="pbdg pbd6">Startup</span><span class="pbdg pbd3">Hackathon</span></div>
+      <div><span class="worth worth-abs">🔥 MUST BUILD — ISEF/IRIS + Startup potential</span></div>
     </div>
 
-    <div class="proj-card pc2">
-      <div class="pc-phase">Phase 2 · Week 22</div>
+    <div class="proj-card pc3">
+      <div class="pc-phase">Phase 3 · Week 22</div>
       <div class="pc-name">AI Study Buddy</div>
       <div class="pc-desc">Upload lecture notes → auto-generate flashcards, summaries, and a 5-question quiz. Solve your own problem as a student.</div>
       <div class="pc-section">
@@ -782,8 +849,8 @@ ul.plain li::before{content:'·';color:var(--muted);}
       <div><span class="worth worth-yes">✅ Worth It — Social impact + startup seed</span></div>
     </div>
 
-    <div class="proj-card pc3">
-      <div class="pc-phase">Phase 3 · Week 30 → SAAS SEED</div>
+    <div class="proj-card pc4">
+      <div class="pc-phase">Phase 4 · Week 30 → SAAS SEED</div>
       <div class="pc-name">🤖 AI Research Assistant</div>
       <div class="pc-desc">Upload research PDFs → ask questions → get cited answers using RAG. Add Google Scholar search integration. This is a real product researchers will pay for.</div>
       <div class="pc-section">
@@ -808,8 +875,8 @@ ul.plain li::before{content:'·';color:var(--muted);}
       <div><span class="worth worth-abs">🔥 MUST BUILD — Your SaaS v1.0</span></div>
     </div>
 
-    <div class="proj-card pc3">
-      <div class="pc-phase">Phase 3 · Week 33</div>
+    <div class="proj-card pc4">
+      <div class="pc-phase">Phase 4 · Week 33</div>
       <div class="pc-name">Multi-Agent Research Agent</div>
       <div class="pc-desc">3 crewAI agents collaborate: Researcher (web search) → Analyst (synthesize) → Writer (format report). Input a topic → get a full research brief.</div>
       <div class="pc-section">
@@ -851,21 +918,21 @@ ul.plain li::before{content:'·';color:var(--muted);}
     <div class="rc-tag">🌿 Agriculture · ISEF Category: Plant Biology or Engineering</div>
     <div class="rc-title">AI-Powered Tea Leaf Disease Detection Using Transfer Learning</div>
     <div class="rc-desc">Assam produces 50% of India's tea (worth billions). Tea blight and grey blight destroy entire harvests. Fine-tune an EfficientNet-B4 on PlantVillage + 500 self-collected Assam tea photos. This makes it geographically unique — no prior ISEF project has done this.</div>
-    <div class="rc-data"><span>Dataset:</span> PlantVillage (Kaggle) + collect 300–500 photos yourself using your phone<br><span>Model:</span> EfficientNet-B4 via fast.ai (Phase 2 skill)<br><span>ISEF Category:</span> Plant Sciences or Computational Biology<br><span>Difficulty:</span> Medium · <span>Impact:</span> Affects millions of tea farmers</div>
+    <div class="rc-data"><span>Dataset:</span> PlantVillage (Kaggle) + collect 300–500 photos yourself using your phone<br><span>Model:</span> EfficientNet-B4 via fast.ai (Phase 3 skill)<br><span>ISEF/IRIS Category:</span> Plant Sciences or Computational Biology<br><span>Difficulty:</span> Medium · <span>Impact:</span> Affects millions of tea farmers</div>
   </div>
 
   <div class="research-card">
     <div class="rc-tag">🌊 Environment · ISEF Category: Environmental Engineering</div>
     <div class="rc-title">Brahmaputra Flood Prediction Using LSTM Time Series</div>
     <div class="rc-desc">Assam is one of the most flood-affected states in the world. Historical river level + rainfall data is publicly available from India's CWC. Build an LSTM model that predicts flood risk 24–72 hours ahead. Massive social impact, highly specific regional dataset.</div>
-    <div class="rc-data"><span>Dataset:</span> CWC (Central Water Commission) historical data + IMD rainfall records — both free<br><span>Model:</span> LSTM using PyTorch (Phase 2 skill)<br><span>ISEF Category:</span> Environmental Engineering<br><span>Difficulty:</span> Medium-Hard · <span>Impact:</span> Could actually save lives</div>
+    <div class="rc-data"><span>Dataset:</span> CWC (Central Water Commission) historical data + IMD rainfall records — both free<br><span>Model:</span> LSTM using PyTorch (Phase 3 skill)<br><span>ISEF/IRIS Category:</span> Environmental Engineering<br><span>Difficulty:</span> Medium-Hard · <span>Impact:</span> Could actually save lives</div>
   </div>
 
   <div class="research-card">
     <div class="rc-tag">🗣️ NLP / Linguistics · ISEF Category: Computer Science</div>
     <div class="rc-title">Low-Resource NLP: Sentiment Analysis for Assamese Language</div>
     <div class="rc-desc">Assamese is spoken by 15+ million people but has almost no NLP research. Fine-tune XLM-RoBERTa (a multilingual transformer) on self-labeled Assamese social media text. This is a genuinely underexplored field — your research could be the first of its kind.</div>
-    <div class="rc-data"><span>Dataset:</span> Scrape 3,000–5,000 Assamese tweets/news sentences + label them yourself<br><span>Model:</span> XLM-RoBERTa fine-tuned via Hugging Face (Phase 3 skill)<br><span>ISEF Category:</span> Systems Software / Linguistics<br><span>Difficulty:</span> Hard but high reward · <span>Impact:</span> Represents 15M+ people</div>
+    <div class="rc-data"><span>Dataset:</span> Scrape 3,000–5,000 Assamese tweets/news sentences + label them yourself<br><span>Model:</span> XLM-RoBERTa fine-tuned via Hugging Face (Phase 4 skill)<br><span>ISEF/IRIS Category:</span> Systems Software / Linguistics<br><span>Difficulty:</span> Hard but high reward · <span>Impact:</span> Represents 15M+ people</div>
   </div>
 
   <div class="research-card">
@@ -879,17 +946,26 @@ ul.plain li::before{content:'·';color:var(--muted);}
     <div class="rc-tag">⚕️ Healthcare · ISEF Category: Biomedical Engineering</div>
     <div class="rc-title">Diabetic Retinopathy Detection for Rural NE India Healthcare</div>
     <div class="rc-desc">Diabetes is rising sharply in Assam but ophthalmologists are scarce in rural areas. Use the APTOS 2019 dataset from Kaggle (thousands of retinal images, 5 severity classes). Frame as: "Can AI-assisted diagnosis improve healthcare equity in NE India?"</div>
-    <div class="rc-data"><span>Dataset:</span> APTOS 2019 Blindness Detection (Kaggle — 3,662 images, fully labeled)<br><span>Model:</span> EfficientNet or ResNet via fast.ai<br><span>ISEF Category:</span> Biomedical and Health Sciences<br><span>Difficulty:</span> Medium · <span>Impact:</span> Healthcare equity angle is very strong for judges</div>
+    <div class="rc-data"><span>Dataset:</span> APTOS 2019 Blindness Detection (Kaggle — 3,662 images, fully labeled)<br><span>Model:</span> EfficientNet or ResNet via fast.ai<br><span>ISEF/IRIS Category:</span> Biomedical and Health Sciences<br><span>Difficulty:</span> Medium · <span>Impact:</span> Healthcare equity angle is very strong for judges</div>
   </div>
 
   <div class="research-card">
     <div class="rc-tag">🌫️ Environment · ISEF Category: Environmental Sciences</div>
     <div class="rc-title">Predicting Guwahati Air Quality Using Machine Learning</div>
     <div class="rc-desc">CPCB provides historical AQI data for Indian cities for free. Build an ML model that predicts next-day AQI from weather + historical patterns. Include analysis of which pollutants have risen since 2015. Highly practical and politically relevant.</div>
-    <div class="rc-data"><span>Dataset:</span> CPCB India AQI data (free at cpcb.nic.in) + Weather Underground historical<br><span>Model:</span> XGBoost + LSTM comparison (Phase 1 + Phase 2 skills)<br><span>ISEF Category:</span> Environmental Sciences<br><span>Difficulty:</span> Medium · <span>Impact:</span> Local public health</div>
+    <div class="rc-data"><span>Dataset:</span> CPCB India AQI data (free at cpcb.nic.in) + Weather Underground historical<br><span>Model:</span> XGBoost + LSTM comparison (Phase 2 + Phase 3 skills)<br><span>ISEF/IRIS Category:</span> Environmental Sciences<br><span>Difficulty:</span> Medium · <span>Impact:</span> Local public health</div>
   </div>
 
   <div class="divider"></div>
+  <div class="slbl">IRIS 2026 Final Push</div>
+  <div class="card">
+    <div class="isef-row"><div class="isef-month">Aug 15, 2026</div><div class="isef-task">Lock one research question and one fallback topic. Create the research journal document the same day.</div></div>
+    <div class="isef-row"><div class="isef-month">Sep 01, 2026</div><div class="isef-task">Finish 20–30 paper literature review. Write the problem statement, novelty claim, and evaluation metric.</div></div>
+    <div class="isef-row"><div class="isef-month">Sep 15, 2026</div><div class="isef-task">Collect or clean the first usable dataset. Freeze the minimum viable experiment plan.</div></div>
+    <div class="isef-row"><div class="isef-month">Oct 01, 2026</div><div class="isef-task">Have a working baseline model, first results table, and rough abstract.</div></div>
+    <div class="isef-row"><div class="isef-month">Oct 15, 2026</div><div class="isef-task">Working target for IRIS submission: final abstract, methodology, results, figures, and project log ready for review.</div></div>
+  </div>
+
   <div class="slbl">ISEF 2027 Submission Timeline</div>
   <div class="card">
     <div class="isef-row"><div class="isef-month">Aug–Sep 2026</div><div class="isef-task">Choose your research topic (do it at Week 8 of this roadmap). Do 20–30 papers literature review on Google Scholar. Open a research journal document.</div></div>
@@ -901,7 +977,7 @@ ul.plain li::before{content:'·';color:var(--muted);}
     <div class="isef-row"><div class="isef-month">May 2027</div><div class="isef-task">ISEF (Intel/Regeneron) — if qualified from state. Grand Awards include $75,000 top prize. Category awards include scholarships and internship offers.</div></div>
   </div>
 
-  <div class="callout callout-warn"><strong>⚠️ Critical for ISEF:</strong> Do NOT use OpenAI API as your core model. Judges require you to describe your methodology — "I called an API" is not science. You need to train or fine-tune a model on original data. Phase 2 (fast.ai) and Phase 3 (Hugging Face) give you exactly this capability.</div>
+  <div class="callout callout-warn"><strong>⚠️ Critical for ISEF/IRIS:</strong> Do NOT use OpenAI API as your core model. Judges require you to describe your methodology — "I called an API" is not science. You need to train or fine-tune a model on original data. Phase 3 (fast.ai) and Phase 4 (Hugging Face) give you exactly this capability.</div>
 </div>
 
 <!-- ══════════ TAB: COMPETE ══════════ -->
@@ -995,19 +1071,19 @@ ul.plain li::before{content:'·';color:var(--muted);}
 
   <div class="slbl">Strongest Startup Ideas From Your Projects</div>
   <div class="grid2">
-    <div class="card" style="border-left:3px solid var(--p2);">
+    <div class="card" style="border-left:3px solid var(--ph3);">
       <div class="bold white" style="margin-bottom:6px;">🌿 Agri-AI (from Plant Disease Detector)</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.6;">Farmers take a photo of a sick crop → AI diagnoses it + suggests treatment. Charge agriculture cooperatives or NGOs per diagnosis. Massive India market. Potential to partner with state agriculture departments.</div>
     </div>
-    <div class="card" style="border-left:3px solid var(--p3);">
+    <div class="card" style="border-left:3px solid var(--ph4);">
       <div class="bold white" style="margin-bottom:6px;">📄 Scholar AI (from Research Assistant)</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.6;">Students/researchers upload papers → AI explains them, answers questions, generates citations. Charge $9–19/month. 2 billion students globally. Can add annotation features, research team collaboration.</div>
     </div>
-    <div class="card" style="border-left:3px solid var(--p0);">
+    <div class="card" style="border-left:3px solid var(--ph1);">
       <div class="bold white" style="margin-bottom:6px;">📚 Study Buddy (from AI Study Assistant)</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.6;">B2B to schools: teacher uploads curriculum → students get AI tutors. Better angle than B2C. Schools pay $500–5000/year per cohort. Pitch to CBSE/state board schools as accessibility tool.</div>
     </div>
-    <div class="card" style="border-left:3px solid var(--p3);">
+    <div class="card" style="border-left:3px solid var(--ph4);">
       <div class="bold white" style="margin-bottom:6px;">🌊 Flood Alert System (from ISEF research)</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.6;">Your ISEF flood prediction model → government / NGO partnership. Pitch to Assam State Disaster Management Authority. Not a typical SaaS but high-impact and excellent for college apps + grant applications.</div>
     </div>
@@ -1158,6 +1234,59 @@ ul.plain li::before{content:'·';color:var(--muted);}
 </div>
 
 <script>
+const ROADMAP_START = '2026-06-29';
+const IRIS_TARGET = '2026-10-15';
+const DEADLINES = {
+  'p1-ai-1':'2026-06-30',
+  'p1-ai-2':'2026-07-01',
+  'p1-ai-3':'2026-07-03',
+  'p1-ai-4':'2026-07-05',
+  'c02-1':'2026-07-06',
+  'c02-2':'2026-07-07',
+  'c02-3':'2026-07-08',
+  'c02-4':'2026-07-09',
+  'c03-1':'2026-07-12',
+  'c03-2':'2026-07-16',
+  'c03-3':'2026-07-19',
+  'c05-1':'2026-07-24',
+  'c05-2':'2026-07-27',
+  'c05-3':'2026-07-31',
+  'c06-1':'2026-08-07',
+  'c06-2':'2026-08-14',
+  'c06-3':'2026-08-21',
+  'c06-4':'2026-08-28',
+  'c06-5':'2026-09-04',
+  'c06-6':'2026-09-11',
+  'c06-7':'2026-09-18',
+  'c06-8':'2026-09-25',
+  'c06-9':'2026-10-02',
+  'c06-10':'2026-10-09',
+  'c07-1':'2026-10-30',
+  'c07-2':'2026-11-06',
+  'c07-3':'2026-11-13',
+  'c07-4':'2026-11-20',
+  'c07-5':'2026-11-27',
+  'c07-6':'2026-12-04',
+  'c07-7':'2026-12-11',
+  'c07-8':'2026-12-18',
+  'c08-1':'2026-12-20',
+  'c08-2':'2026-12-22',
+  'c08-3':'2026-12-24',
+  'c09-1':'2026-12-31',
+  'c09-2':'2027-01-07',
+  'c09-3':'2027-01-14',
+  'c10-1':'2027-01-21',
+  'c10-2':'2027-01-28',
+  'c10-3':'2027-02-04',
+  'c10-4':'2027-02-11',
+  'c10-5':'2027-02-18',
+  'c10-6':'2027-02-25',
+  'c11-1':'2027-03-01',
+  'c11-2':'2027-03-05',
+  'c11-3':'2027-03-09',
+  'c11-4':'2027-03-14'
+};
+
 // ─ TAB SWITCHING ─
 document.querySelectorAll('.tbn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -1183,6 +1312,51 @@ function loadState(id) {
   try { return localStorage.getItem('ck_' + id) === '1'; } catch(e) { return false; }
 }
 
+function dateFromISO(iso) {
+  const [year, month, day] = iso.split('-').map(Number);
+  return new Date(year, month - 1, day, 12, 0, 0);
+}
+
+function todayNoon() {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0);
+}
+
+function daysUntil(iso) {
+  const msPerDay = 24 * 60 * 60 * 1000;
+  return Math.ceil((dateFromISO(iso) - todayNoon()) / msPerDay);
+}
+
+function formatDeadline(iso) {
+  return dateFromISO(iso).toLocaleDateString('en-US', {month:'short', day:'numeric'});
+}
+
+function decorateDeadline(cb) {
+  const deadline = DEADLINES[cb.id];
+  const label = cb.closest('.ck-item')?.querySelector('label');
+  if (!deadline || !label || label.querySelector('.deadline')) return;
+
+  const days = daysUntil(deadline);
+  let tag = days + 'd';
+  let cls = 'dl-ok';
+  if (days < 0) {
+    tag = cb.checked ? 'DONE' : 'OVERDUE';
+    cls = 'dl-over';
+  } else if (days === 0) {
+    tag = 'TODAY';
+    cls = 'dl-urgent';
+  } else if (days <= 3) {
+    cls = 'dl-urgent';
+  } else if (days <= 14) {
+    cls = 'dl-soon';
+  }
+
+  const chip = document.createElement('span');
+  chip.className = 'deadline';
+  chip.innerHTML = `<span>Due ${formatDeadline(deadline)}</span><span class="dl-tag ${cls}">${tag}</span>`;
+  label.appendChild(chip);
+}
+
 // Init all checkboxes
 document.querySelectorAll('.ck-item input[type=checkbox]').forEach(cb => {
   const id = cb.id;
@@ -1190,9 +1364,12 @@ document.querySelectorAll('.ck-item input[type=checkbox]').forEach(cb => {
     cb.checked = true;
     cb.closest('.ck-item').classList.add('done');
   }
+  decorateDeadline(cb);
   cb.addEventListener('change', () => {
     saveState(id, cb.checked);
     cb.closest('.ck-item').classList.toggle('done', cb.checked);
+    cb.closest('.ck-item')?.querySelector('.deadline')?.remove();
+    decorateDeadline(cb);
     updateProgress();
   });
 });
@@ -1208,6 +1385,49 @@ function updateProgress() {
     }).length;
     bar.style.width = Math.round((done / ids.length) * 100) + '%';
   });
+  updatePhaseProgress();
+  updateOverallProgress();
+  updateIrisProgress();
+}
+
+function updatePhaseProgress() {
+  document.querySelectorAll('.phase-wrap').forEach(phase => {
+    const boxes = [...phase.querySelectorAll('.ck-item input[type=checkbox]')];
+    const pctEl = phase.querySelector('.phase-pct');
+    if (!boxes.length || !pctEl) return;
+    const done = boxes.filter(cb => cb.checked).length;
+    const pct = Math.round((done / boxes.length) * 100);
+    pctEl.textContent = pct + '%';
+    pctEl.classList.toggle('pct-done', pct === 100);
+  });
+}
+
+function updateOverallProgress() {
+  const boxes = [...document.querySelectorAll('.ck-item input[type=checkbox]')];
+  const done = boxes.filter(cb => cb.checked).length;
+  const pct = boxes.length ? Math.round((done / boxes.length) * 100) : 0;
+  const fill = document.getElementById('overallFill');
+  const label = document.getElementById('overallPct');
+  if (fill) fill.style.width = pct + '%';
+  if (label) label.textContent = pct + '%';
+}
+
+function updateIrisProgress() {
+  const irisDate = dateFromISO(IRIS_TARGET);
+  const boxes = [...document.querySelectorAll('.ck-item input[type=checkbox]')];
+  const irisBoxes = boxes.filter(cb => DEADLINES[cb.id] && dateFromISO(DEADLINES[cb.id]) <= irisDate);
+  const done = irisBoxes.filter(cb => cb.checked).length;
+  const readinessPct = irisBoxes.length ? Math.round((done / irisBoxes.length) * 100) : 0;
+  const days = daysUntil(IRIS_TARGET);
+  const fill = document.getElementById('irisFill');
+  const label = document.getElementById('irisDays');
+  const wrap = document.getElementById('irisCountdown');
+  if (fill) fill.style.width = readinessPct + '%';
+  if (label) label.textContent = days >= 0 ? `${days}d` : 'done';
+  if (wrap) {
+    wrap.classList.toggle('urgent', days >= 0 && days <= 14);
+    wrap.classList.toggle('soon', days > 14 && days <= 45);
+  }
 }
 updateProgress();
 </script>
